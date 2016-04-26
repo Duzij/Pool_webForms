@@ -8,31 +8,31 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public class HelpingLine : Cue
+    public class HelpingLine : GameLine
     {
-        private Point P1, P2;
+
+        float newx, newy;
 
         public HelpingLine()
         {
-            this.P1 = new Point(0, 0);
-            this.P2 = new Point(0, 0);
+            base.P1 = new PointF(0, 0);
+            base.P2 = new PointF(0, 0);
         }
 
-        public HelpingLine(Point p1, Point p2)
+        public HelpingLine(MouseEventArgs e, PointF _whiteBallCenter)
         {
-            this.P1 = p1;
-            this.P2 = p2;
+            base.P1 = _whiteBallCenter;
+
+            var diffX = Convert.ToSingle(e.X - _whiteBallCenter.X);
+            var diffY = Convert.ToSingle(e.Y - _whiteBallCenter.Y);
+
+            newx = _whiteBallCenter.X - diffX;
+            newy = _whiteBallCenter.Y - diffY;
+
+            base.P2 = new PointF(newx, newy);
+
+            base.lineColor = Color.Red;
+            base.lineWidth = 1;
         }
-
-        public override void Render(Graphics g)
-        {
-            using (var p = new Pen(Color.Yellow, 3))
-            {
-                g.DrawLine(p, P1, P2);
-            }
-        }
-
-
-
     }
 }

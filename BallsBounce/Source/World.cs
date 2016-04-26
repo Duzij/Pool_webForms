@@ -1,46 +1,69 @@
 ﻿using System;using System.Collections.Generic;using System.Drawing;using System.IO.Packaging;using System.Linq;using System.Text;using System.Threading.Tasks;using System.Windows;using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace WindowsFormsApplication1{    public class World    {        public List<Ball> _balls_on_field;
+namespace WindowsFormsApplication1{    public class World    {        private Random r = new Random();        public List<Ball> _balls_on_field;
         public Cue cue;
         public HelpingLine hLine;
 
+        public List<List<int>> positions = new List<List<int>>() { new List<int> {850,325},
+            new List<int> {881,325},new List<int> {912,325},new List<int> {943,325},
+            new List<int> {881,356},new List<int> {912,356},new List<int> {943,356},
+            new List<int> {912,387},new List<int> {943,387},new List<int> {943,418},
+            new List<int> {881,294},new List<int> {912,294},new List<int> {943,294},
+            new List<int> {912,263},new List<int> {943,263},new List<int> {943,232},
+        };
+
+
+
         private List<Ball> ResetGame()
         {
-            return new List<Ball>()
+            List<Ball> ballsAholls = new List<Ball>()
             {
-                //stredni radek
-                new ColoredBall(Color.Yellow, false) {DefX = 850, DefY = 325},
-                new ColoredBall(Color.Blue, false) {DefX = 900, DefY = 325 },
-                new ColoredBall(Color.Red, false) {DefX = 950, DefY = 325 },
-                new ColoredBall(Color.Purple, false) {DefX = 1000, DefY = 325 },
-                //prvni horni
-                new ColoredBall(Color.Orange, false) {DefX = 900, DefY = 375 },
-                new ColoredBall(Color.Green, false) {DefX = 950, DefY = 375 },
-                new ColoredBall(Color.DarkRed, false) {DefX = 1000, DefY = 375 },
-                //druhy horni
-                new ColoredBall(Color.Black, false)  {DefX = 950, DefY = 425 },
-                new ColoredBall(Color.Yellow, true) {DefX = 1000, DefY = 425 },
-                //treti horni
-                new ColoredBall(Color.Blue, true) {DefX = 1000, DefY = 475 },
-                //prvni dolni
-                new ColoredBall(Color.Red, true) {DefX = 900, DefY = 275 },
-                new ColoredBall(Color.Purple, true) {DefX = 950, DefY = 275 },
-                new ColoredBall(Color.Orange, true) {DefX = 1000, DefY = 275 },
-                //druhy dolni
-                new ColoredBall(Color.Green, true) {DefX = 950, DefY = 225 },
-                new ColoredBall(Color.DarkRed, true) {DefX = 1000, DefY = 225 },
-                //treti dole
-                new ColoredBall(Color.Black, true) {DefX = 1000, DefY = 175 },
+                new ColoredBall(Color.Yellow, false),
+                new ColoredBall(Color.Blue, false),
+                new ColoredBall(Color.Red, false) ,
+                new ColoredBall(Color.Purple, false),
+                new ColoredBall(Color.Orange, false) ,
+                new ColoredBall(Color.Green, false),
+                new ColoredBall(Color.DarkRed, false),
+                new ColoredBall(Color.Black, false),
+                new ColoredBall(Color.Yellow, true) ,
+                new ColoredBall(Color.Blue, true),
+                new ColoredBall(Color.Red, true) ,
+                new ColoredBall(Color.Purple, true) ,
+                new ColoredBall(Color.Orange, true),
+                new ColoredBall(Color.Green, true),
+                new ColoredBall(Color.DarkRed, true) ,
+                new ColoredBall(Color.Black, true),
 
-                new Hole () {DefX = 60, DefY = 58 },
-                new Hole () {DefX = 650, DefY = 50 },
-                new Hole () {DefX = 1238, DefY = 57 },
 
-                new Hole () {DefX = 60, DefY = 621 },
-                new Hole () {DefX = 650, DefY = 625 },
-                new Hole () {DefX = 1238, DefY = 621 },
             };
+
+            List<int> used = new List<int>();
+
+            foreach (var ball in ballsAholls)
+            {
+                int Pindex = r.Next(15);
+                if (!used.Contains(Pindex))
+                {
+                    ball.DefX = (float)positions[Pindex][0];
+                    ball.DefY = (float)positions[Pindex][1];
+                    used.Add(Pindex);
+                }
+            }
+
+            List<Hole> holes = new List<Hole>() { new Hole() { DefX = 60, DefY = 58 },
+                new Hole() { DefX = 650, DefY = 50 },
+                new Hole() { DefX = 1238, DefY = 57 },
+
+                new Hole() { DefX = 60, DefY = 621 },
+                new Hole() { DefX = 650, DefY = 625 },
+                new Hole() { DefX = 1238, DefY = 621 } };
+
+
+            ballsAholls.AddRange(holes);
+
+            return ballsAholls;
         }
         private int _width;        private int _height;        public World(int width, int height)        {            _balls_on_field = this.ResetGame();
             cue = new Cue();
@@ -48,6 +71,16 @@ namespace WindowsFormsApplication1{    public class World    {        publi
             {
                 ball.ResetPosition();
             }            this._width = width;            this._height = height;        }
+
+        public void Regenerate()
+        {
+            _balls_on_field = this.ResetGame();
+
+            foreach (var ball in _balls_on_field)
+            {
+                ball.ResetPosition();
+            }
+        }
 
         public void AddBall(Ball b)        {            this._balls_on_field.Add(b);        }        public void Next()        {            foreach (Ball ball in _balls_on_field)            {                ball.Move();                ball.Collide(this._width, this._height);            }
         }        public void Render(Graphics g)        {

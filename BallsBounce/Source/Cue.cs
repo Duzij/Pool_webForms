@@ -8,31 +8,19 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-     public class Cue
+     public class Cue : GameLine
     {
-        private Point P1, P2;
+        public Cue(Point p1, Point p2)
+        {
+            base.P1 = p1;
+            base.P2 = p2;
+            base.lineColor = Color.SaddleBrown;
+            base.lineWidth = 9;
+        }
 
         public Cue()
         {
-            this.P1 = new Point(0, 0);
-            this.P2 = new Point(0, 0);
+
         }
-
-        public Cue(Point p1, Point p2)
-        {
-            this.P1 = p1;
-            this.P2 = p2;
-        }
-
-        public virtual void Render(Graphics g)
-        {
-            using (var p = new Pen(Color.RosyBrown, 8))
-            {
-                g.DrawLine(p, P1, P2);
-            }
-        }
-
-
-
     }
 }

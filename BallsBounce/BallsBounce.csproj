@@ -60,6 +60,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\ColoredBall.cs" />
+    <Compile Include="Source\GameLine.cs" />
     <Compile Include="Source\HelpingLine.cs" />
     <Compile Include="Source\Cue.cs" />
     <Compile Include="Source\Hole.cs" />

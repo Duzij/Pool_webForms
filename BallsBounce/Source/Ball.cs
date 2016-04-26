@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1
         public Color BorderColor { get; set; }
         public float X { get; set; }
         public float Y { get; set; }
-        public int Radius { get; set; } = 12;
+        public int Radius { get; set; } = 10;
         public float Vx { get; set; }
         public float Vy { get; set; }
         public float Mass { get; set; }
@@ -65,10 +65,15 @@ namespace WindowsFormsApplication1
             {
                 g.FillEllipse(brush, Convert.ToSingle(this.X - this.Radius), Convert.ToSingle(this.Y - this.Radius), (this.Radius * 2), (this.Radius * 2));
             }
-            using (Pen border = new Pen(this.BorderColor, 12))
+            using (Pen border = new Pen(this.BorderColor, 10))
             {
                 g.DrawEllipse(border, Convert.ToSingle(this.X - this.Radius), Convert.ToSingle(this.Y - this.Radius), this.Radius * 2, this.Radius * 2);
             }
+
+            //light particle on balls
+            //Brush LightB = new SolidBrush(Color.White);
+            //g.FillEllipse(LightB, Convert.ToSingle(this.X - this.Radius + 2), Convert.ToSingle(this.Y - this.Radius + 4), this.Radius, this.Radius);
+
         }
     }
 }

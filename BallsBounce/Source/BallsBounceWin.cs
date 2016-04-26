@@ -56,21 +56,23 @@ namespace WindowsFormsApplication1
         {
             this.label1.Text = $"X: {e.X}, Y: {e.Y}";
 
-            if (_whiteball.Vx <= 0.00 && _whiteball.Vy <= 0.00 && _whiteball.Vx >= -0.00 && _whiteball.Vy <= -0.00)
+            if (
+                _whiteball.Vx <= 0.01 && _whiteball.Vy <= 0.01 &&
+                _whiteball.Vx >= -0.01 && _whiteball.Vy >= -0.01
+                )
             {
                 _world.cue = new Cue(new Point(e.X, e.Y), new Point((int)this._whiteball.X, (int)this._whiteball.Y));
-                //_world.hLine = new HelpingLine(new Point(-e.X, -e.Y), new Point((int)this._whiteball.X, (int)this._whiteball.Y));
+                _world.hLine = new HelpingLine(e, new PointF(this._whiteball.X , this._whiteball.Y));
+
             }
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            _world.cue = new Cue(new Point(e.X, e.Y), new Point((int)this._whiteball.X, (int)this._whiteball.Y));
-            //_world.hLine = new HelpingLine(new Point(-e.X, -e.Y), new Point((int)this._whiteball.X, (int)this._whiteball.Y));
+            this._world = new World(this.pictureBox1.Width, this.pictureBox1.Height);
+            this._whiteball = new WhiteBall();
+            this._whiteball.ResetPosition();
+            this._world.AddBall(this._whiteball);
         }
-
-
-
-
     }
 }

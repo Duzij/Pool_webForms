@@ -11,7 +11,7 @@ namespace WindowsFormsApplication1
         public Hole()
         {
             base.Color = System.Drawing.Color.Transparent;
-            base.BorderColor = System.Drawing.Color.Red;
+            base.BorderColor = System.Drawing.Color.Transparent;
             base.Radius = 10;
         }
     }
